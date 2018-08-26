@@ -2,31 +2,57 @@
 public class AStarSearch {
 	
 	//Nodes for finding shortest path
-	AStarNode startNode,goalNode;
+	Node startNode,endNode;
 
 	public AStarSearch(Node start, Node goal) {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AStarNode getStartNode() {
+	public Node getStartNode() {
 		return startNode;
 	}
 
 	public void setStartNode(Node startNode) {
-		this.startNode = (AStarNode) startNode;
+		this.startNode = startNode;
 	}
 
-	public AStarNode getGoalNode() {
-		return goalNode;
+	public Node getGoalNode() {
+		return endNode;
 	}
 
 	public void setGoalNode(Node closest) {
-		this.goalNode = (AStarNode) closest;
+		this.endNode = closest;
 	}
 	
 	public void clearSearch() {
 		startNode = null;
-		goalNode = null;
+		endNode = null;
+	}
+	
+	
+	/**
+	 * A* Search to find the shortest path from the start location
+	 * to the goal location, printing out the sequence of reoad segments 
+	 * (including road names and segment lengths)
+	 * @param start
+	 * @param end
+	 */
+	public void findShortestPath(Node start, Node end) {
+
+	}
+	
+	/**
+	 * heuristic function finds: estimated cost to goal
+	 */
+	public int h() {
+		return 0;//TODO: not 0
+	}
+
+	/**
+	 * g(node): cost from the start
+	 */
+	public int g(Node currentNode) {
+		return 0;//TODO: not 0
 	}
 }
 

@@ -12,11 +12,20 @@ import java.util.Set;
  * 
  * @author tony
  */
-public class Node {
+public class Node implements Comparable {
 
 	public final int nodeID;
 	public final Location location;
 	public final Collection<Segment> segments;
+	
+	//AStar
+	Node pathParent;
+	float costFromStart; //g
+	float estimateCostToGoal; //h
+	
+	public double f; //g+h
+	public double g; //cost from start
+	public double h; //estimated cost to goal node
 
 	public Node(int nodeID, double lat, double lon) {
 		this.nodeID = nodeID;
@@ -51,6 +60,18 @@ public class Node {
 			str += e + ", ";
 		}
 		return str.substring(0, str.length() - 2);
+	}
+	
+	//A Star
+	public float getCost() {
+		return costFromStart+estimateCostToGoal;
+	}
+		
+	
+	@Override
+	public int compareTo(Object arg0) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
 

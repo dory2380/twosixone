@@ -18,6 +18,7 @@ public class Mapper extends GUI {
 	public static final Color NODE_COLOUR = new Color(77, 113, 255);
 	public static final Color SEGMENT_COLOUR = new Color(130, 130, 130);
 	public static final Color HIGHLIGHT_COLOUR = new Color(255, 219, 77);
+	public static final Color HIGHLIGHT_COLOUR_PATH = new Color(204, 153, 255);
 
 	// these two constants define the size of the node squares at different zoom
 	// levels; the equation used is node size = NODE_INTERCEPT + NODE_GRADIENT *
@@ -64,22 +65,26 @@ public class Mapper extends GUI {
 				closest = node;
 			}
 		}
-
-		// if it's close enough, highlight it and show some information.
+                                
+		// if it's close enough, highlight it and show some information. 
 		if (clicked.distance(closest.location) < MAX_CLICKED_DISTANCE) {
 			graph.setHighlight(closest);	
 			getTextOutputArea().setText(closest.toString());
-			
+						
 			//UPDATE START AND END NODES
 			if(graph.search.getStartNode()!=null) {
 				if(graph.search.getGoalNode()!=null) {
 					graph.search.clearSearch();
+					graph.highlightedNodes.clear();
+					//there exists both a start and end, reset both nodes and appoint new start
+					graph.search.setStartNode(closest);
 				//end doesn't exist
 				}else {
-					graph.search.setGoalNode(closest);
+					graph.search.setGoalNode(closest); 
 				}
 			}else {
 				graph.search.setStartNode(closest); 
+
 				}
 			
 			

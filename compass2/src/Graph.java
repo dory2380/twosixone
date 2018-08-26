@@ -33,7 +33,7 @@ public class Graph {
 
 
 	Collection<Road> highlightedRoads = new HashSet<>();
-	Collection<Node> highlightedNodes = new HashSet<>();
+	Collection<Node> highlightedNodes = new HashSet<>(); 
 
 	
 
@@ -74,6 +74,15 @@ public class Graph {
 			g2.setColor(Mapper.HIGHLIGHT_COLOUR);
 			highlightedNode.draw(g2, screen, origin, scale);
 		}
+		
+		// draw path start and end nodes
+		g2.setColor(Mapper.HIGHLIGHT_COLOUR_PATH);
+		if(search.startNode!=null && search.endNode!=null) {
+			search.startNode.draw(g2, screen, origin, scale);
+			search.endNode.draw(g2, screen, origin, scale);
+
+		}
+		
 	}
 
 	public void setHighlight(Node node) {
@@ -88,55 +97,6 @@ public class Graph {
 //	public void setHighlightNodes(Collection<Node> nodes) {
 //		this.highlightedNodes = nodes;
 //	}
-	
-	
-	/**
-	 * A* Search to find the shortest path from the start location
-	 * to the goal location, printing out the sequence of reoad segments 
-	 * (including road names and segment lengths)
-	 * @param start
-	 * @param end
-	 */
-	public void findShortestPath(Node start, Node end) {
-
-	}
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * heuristic function finds: estimated cost to goal
-	 */
-	public int h() {
-		return 0;//TODO: not 0
-	}
-
-	/**
-	 * g(node): cost from the start
-	 */
-	public int g(Node currentNode) {
-		return 0;//TODO: not 0
-	}
-
-//	/**
-//	 * f(node) = g(node) + h(node)
-//	 */
-//	public int f(int g, int h) {
-//		return g+h;
-//	}
-
-
-
 
 }
 
