@@ -17,12 +17,13 @@ public class Node implements Comparable {
 	public final int nodeID;
 	public final Location location;
 	public final Collection<Segment> segments;
-	
+
 	//AStar
 	Node pathParent;
 	double costFromStart; //g
+
 	double estimateCostToGoal; //h
-	
+
 	public double f; //g+h
 	public double g; //cost from start
 	public double h; //estimated cost to goal node
@@ -31,6 +32,7 @@ public class Node implements Comparable {
 		this.nodeID = nodeID;
 		this.location = Location.newFromLatLon(lat, lon);
 		this.segments = new HashSet<Segment>();
+		//this.estimateCostToGoal = calculateHeuristic();
 	}
 
 	public void addSegment(Segment seg) {
@@ -61,9 +63,9 @@ public class Node implements Comparable {
 		}
 		return str.substring(0, str.length() - 2);
 	}
-	
+
 	//A Star
-	
+
 	/**
 	 * calculates cost of this node to another node
 	 * @param n
@@ -72,7 +74,7 @@ public class Node implements Comparable {
 	public double costToNode(Node n) {
 		return 0; //TODO: costToNode
 	}
-	
+
 	/**
 	 * cost from start to this node
 	 * @return
@@ -80,7 +82,7 @@ public class Node implements Comparable {
 	public double getG() {
 		return 0; //TODO: g:
 	}
-	
+
 	/**
 	 * heuristic function to calculate estimated 
 	 * cost from cost to goal
@@ -89,7 +91,7 @@ public class Node implements Comparable {
 	public double getH() {
 		return 0; //TODO: costToNode
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -97,19 +99,27 @@ public class Node implements Comparable {
 	public double getF() {
 		return costFromStart+estimateCostToGoal;
 	}
-		
-	
+
+
 	@Override
 	public int compareTo(Object arg0) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 	public Set<Node> getNeighours() {
 		HashSet<Node> neighbours= new HashSet<>();
 		//TODO:
 		return neighbours;
 	}
-}
 
+
+	public double getCostFromStart() {
+		return costFromStart;
+	}
+
+	public void setCostFromStart(double costFromStart) {
+		this.costFromStart = costFromStart;
+	}
+}
 // code for COMP261 assignments

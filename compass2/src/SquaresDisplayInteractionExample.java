@@ -16,14 +16,14 @@ import java.util.Random;
  * 
  * @author tony
  */
-public class SquaresExample extends GUI {
+public class SquaresDisplayInteractionExample extends GUI {
 	private static final int NUM_SQUARES = 10;
 	private static final int SQUARE_SIZE = 30;
 
 	private final Random random = new Random();
 	private final List<Square> squares = new ArrayList<Square>();
 
-	public SquaresExample() {
+	public SquaresDisplayInteractionExample() {
 		makeSquares();
 	}
 
@@ -103,7 +103,7 @@ public class SquaresExample extends GUI {
 	}
 
 	public static void main(String[] args) {
-		new SquaresExample();
+		new SquaresDisplayInteractionExample();
 	}
 
 	@Override

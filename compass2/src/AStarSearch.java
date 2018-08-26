@@ -1,4 +1,6 @@
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 public class AStarSearch{
@@ -9,11 +11,18 @@ public class AStarSearch{
 	PriorityQueue<Node> fringe = new PriorityQueue<>();
 	HashSet<Node> visited = new HashSet<Node>();
 	
-	Graph search;
-	
+	Map<Integer, Node> weightedNodes = new HashMap<>();
 	
 	public AStarSearch(Node start, Node goal, Graph g) {
-		// TODO Auto-generated constructor stub
+		//add existing the nodes in the graph with added distance from start
+		for(Map.Entry<Integer, Node> entry : g.nodes.entrySet()) {
+			Node weightedNode = entry.getValue();
+			weightedNode.setCostFromStart(weightedNode.location.distance(startNode.location));
+			weightedNodes.put(entry.getKey(), entry.getValue());
+		}
+		
+		//Initialise there to be only start node in the fringe
+		fringe.add(startNode);
 	}
 
 	public Node getStartNode() {
@@ -40,13 +49,22 @@ public class AStarSearch{
 	
 	/**
 	 * A* Search to find the shortest path from the start location
-	 * to the goal location, printing out the sequence of reoad segments 
+	 * to the goal location, printing out the sequence of reload segments 
 	 * (including road names and segment lengths)
 	 * @param start
 	 * @param end
 	 */
 	public void findShortestPath(Node start, Node end) {
-
+		Node current;
+		while(!fringe.isEmpty()) {
+//			for(Map.Entry<Integer, Node> entry : nodes.entrySet()) {
+//	        if(nodeID == entry.getValue().nodeID) {
+//	            node = entry.getValue();
+//	            break;
+//	        }
+//	    }
+			
+		}
 	}
 	
 	/**
