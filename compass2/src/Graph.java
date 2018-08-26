@@ -24,10 +24,14 @@ public class Graph {
 	Collection<Segment> segments;
 
 	Node highlightedNode;
+	Node start;
+	Node goal;
 	
-	//Nodes for finding shortest path
-	Node startNode,endNode;
+	//TODO: move into method to find shortest path? 
+	AStarSearch search = new AStarSearch(start, goal);
 	
+
+
 	Collection<Road> highlightedRoads = new HashSet<>();
 	Collection<Node> highlightedNodes = new HashSet<>();
 
@@ -74,25 +78,18 @@ public class Graph {
 
 	public void setHighlight(Node node) {
 		this.highlightedNode = node;
+		highlightedNodes.add(node); //TODO:
 	}
 
 	public void setHighlightRoads(Collection<Road> roads) {
 		this.highlightedRoads = roads;
 	}
 	
-	public void setHighlightNodes(Collection<Node> nodes) {
-		this.highlightedNodes = nodes;
-	}
+//	public void setHighlightNodes(Collection<Node> nodes) {
+//		this.highlightedNodes = nodes;
+//	}
 	
 	
-	public void setStartNode(Node node) {
-		this.startNode = node;
-	}
-	
-	public void setEndNode(Node node) {
-		this.endNode = node;
-	}
-
 	/**
 	 * A* Search to find the shortest path from the start location
 	 * to the goal location, printing out the sequence of reoad segments 
@@ -131,18 +128,14 @@ public class Graph {
 		return 0;//TODO: not 0
 	}
 
-	/**
-	 * f(node) = g(node) + h(node)
-	 */
-	public int f(int g, int h) {
-		return g+h;
-	}
+//	/**
+//	 * f(node) = g(node) + h(node)
+//	 */
+//	public int f(int g, int h) {
+//		return g+h;
+//	}
 
-	public void clearStartEndNodes() {
-		startNode = null;
-		endNode = null;
-		
-	}
+
 
 
 }

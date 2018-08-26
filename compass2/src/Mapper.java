@@ -71,17 +71,16 @@ public class Mapper extends GUI {
 			getTextOutputArea().setText(closest.toString());
 			
 			//UPDATE START AND END NODES
-			if(graph.startNode!=null) {
-				graph.endNode = closest;
-				if(graph.endNode!=null) {
-					graph.clearStartEndNodes();
+			if(graph.search.getStartNode()!=null) {
+				if(graph.search.getGoalNode()!=null) {
+					graph.search.clearSearch();
 				//end doesn't exist
 				}else {
-					graph.setEndNode(closest);
+					graph.search.setGoalNode(closest);
 				}
 			}else {
-				graph.setStartNode(closest);
-			}
+				graph.search.setStartNode(closest); 
+				}
 			
 			
 		}
