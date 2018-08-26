@@ -2,10 +2,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
+
+import javax.swing.JButton;
 
 /**
  * This is the main class for the mapping program. It extends the GUI abstract
@@ -15,6 +19,7 @@ import java.util.HashSet;
  * @author tony
  */
 public class Mapper extends GUI {
+	
 	public static final Color NODE_COLOUR = new Color(77, 113, 255);
 	public static final Color SEGMENT_COLOUR = new Color(130, 130, 130);
 	public static final Color HIGHLIGHT_COLOUR = new Color(255, 219, 77);
@@ -168,6 +173,11 @@ public class Mapper extends GUI {
 		trie = new Trie(graph.roads.values());
 		origin = new Location(-250, 250); // close enough
 		scale = 1;
+	}
+	
+	protected void calculateAPs() {
+		//TODO: CALCULATE APS BUTTON
+		graph.getAPs();
 	}
 
 	/**

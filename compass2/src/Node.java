@@ -20,8 +20,8 @@ public class Node implements Comparable {
 	
 	//AStar
 	Node pathParent;
-	float costFromStart; //g
-	float estimateCostToGoal; //h
+	double costFromStart; //g
+	double estimateCostToGoal; //h
 	
 	public double f; //g+h
 	public double g; //cost from start
@@ -63,7 +63,38 @@ public class Node implements Comparable {
 	}
 	
 	//A Star
-	public float getCost() {
+	
+	/**
+	 * calculates cost of this node to another node
+	 * @param n
+	 * @return
+	 */
+	public double costToNode(Node n) {
+		return 0; //TODO: costToNode
+	}
+	
+	/**
+	 * cost from start to this node
+	 * @return
+	 */
+	public double getG() {
+		return 0; //TODO: g:
+	}
+	
+	/**
+	 * heuristic function to calculate estimated 
+	 * cost from cost to goal
+	 * @return
+	 */
+	public double getH() {
+		return 0; //TODO: costToNode
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public double getF() {
 		return costFromStart+estimateCostToGoal;
 	}
 		
@@ -72,6 +103,12 @@ public class Node implements Comparable {
 	public int compareTo(Object arg0) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public Set<Node> getNeighours() {
+		HashSet<Node> neighbours= new HashSet<>();
+		//TODO:
+		return neighbours;
 	}
 }
 

@@ -105,6 +105,12 @@ public class SquaresExample extends GUI {
 	public static void main(String[] args) {
 		new SquaresExample();
 	}
+
+	@Override
+	protected void calculateAPs() {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 // code for COMP261 assignments

@@ -28,7 +28,7 @@ public class Graph {
 	Node goal;
 	
 	//TODO: move into method to find shortest path? 
-	AStarSearch search = new AStarSearch(start, goal);
+	AStarSearch search = new AStarSearch(start, goal, this);
 	
 
 
@@ -92,6 +92,12 @@ public class Graph {
 
 	public void setHighlightRoads(Collection<Road> roads) {
 		this.highlightedRoads = roads;
+	}
+
+	public void getAPs() {
+		// TODO articulation points
+		System.out.println("forever getting articulation points...");
+		
 	}
 	
 //	public void setHighlightNodes(Collection<Node> nodes) {

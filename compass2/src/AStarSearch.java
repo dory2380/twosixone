@@ -1,10 +1,18 @@
+import java.util.HashSet;
+import java.util.PriorityQueue;
 
-public class AStarSearch {
+public class AStarSearch{
 	
 	//Nodes for finding shortest path
 	Node startNode,endNode;
-
-	public AStarSearch(Node start, Node goal) {
+	
+	PriorityQueue<Node> fringe = new PriorityQueue<>();
+	HashSet<Node> visited = new HashSet<Node>();
+	
+	Graph search;
+	
+	
+	public AStarSearch(Node start, Node goal, Graph g) {
 		// TODO Auto-generated constructor stub
 	}
 

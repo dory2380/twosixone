@@ -94,6 +94,11 @@ public abstract class GUI {
 	protected abstract void onLoad(File nodes, File roads, File segments,
 			File polygons);
 
+	/**
+	 * is called when users want to find the articulation points on a graph: APs
+	 */
+	protected abstract void calculateAPs();
+	
 	// here are some useful methods you'll need.
 
 	/**
@@ -279,6 +284,7 @@ public abstract class GUI {
 				redraw();
 			}
 		});
+		
 
 		// next, make the search box at the top-right. we manually fix
 		// it's size, and add an action listener to call your code when
@@ -288,6 +294,15 @@ public abstract class GUI {
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onSearch();
+				redraw();
+			}
+		});
+		
+		// make a button to find all the articulation points
+		JButton ap = new JButton("calculate APs");
+		ap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				calculateAPs(); //TODO: articulation points
 				redraw();
 			}
 		});
@@ -339,13 +354,14 @@ public abstract class GUI {
 
 		JPanel navigation = new JPanel();
 		navigation.setMaximumSize(new Dimension(150, 60));
-		navigation.setLayout(new GridLayout(2, 3));
+		navigation.setLayout(new GridLayout(3, 2));
 		navigation.add(out);
 		navigation.add(north);
 		navigation.add(in);
 		navigation.add(west);
 		navigation.add(south);
 		navigation.add(east);
+		navigation.add(ap);
 		controls.add(navigation);
 		controls.add(Box.createRigidArea(new Dimension(15, 0)));
 		// glue is another invisible component that grows to take up all the
