@@ -12,17 +12,20 @@ public class AStarSearch{
 	HashSet<Node> visited = new HashSet<Node>();
 	
 	Map<Integer, Node> weightedNodes = new HashMap<>();
+	Graph aStarGraph;
 	
-	public AStarSearch(Node start, Node goal, Graph g) {
+	double f; //g(node) + h(node)
+	double g; //cost from start
+	
+	//shouldn't need start and end here...lol
+	public AStarSearch(Node start, Node end, Graph graph) {
+		this.aStarGraph = graph;
 		//add existing the nodes in the graph with added distance from start
-		for(Map.Entry<Integer, Node> entry : g.nodes.entrySet()) {
+		for(Map.Entry<Integer, Node> entry : aStarGraph.nodes.entrySet()) {
 			Node weightedNode = entry.getValue();
-			weightedNode.setCostFromStart(weightedNode.location.distance(startNode.location));
+			weightedNode.setEstimateCostToGoalHeuristic(weightedNode.location.distance(endNode.location));
 			weightedNodes.put(entry.getKey(), entry.getValue());
 		}
-		
-		//Initialise there to be only start node in the fringe
-		fringe.add(startNode);
 	}
 
 	public Node getStartNode() {
@@ -41,10 +44,10 @@ public class AStarSearch{
 		this.endNode = closest;
 	}
 	
-	public void clearSearch() {
-		startNode = null;
-		endNode = null;
-	}
+//	public void clearSearch() {
+//		startNode = null;
+//		endNode = null;
+//	}
 	
 	
 	/**
@@ -55,30 +58,59 @@ public class AStarSearch{
 	 * @param end
 	 */
 	public void findShortestPath(Node start, Node end) {
-		Node current;
+		startNode = start;
+		endNode = end;
+		//initialise search
+		fringe.offer(startNode);
+		System.out.println("added" + startNode.toString());
+		
+		Node previous = null;
+		Node current = fringe.poll();
+
+		
 		while(!fringe.isEmpty()) {
-//			for(Map.Entry<Integer, Node> entry : nodes.entrySet()) {
-//	        if(nodeID == entry.getValue().nodeID) {
-//	            node = entry.getValue();
-//	            break;
-//	        }
-//	    }
 			
+			//if current node is unvisited
+			if(!visited.contains(current)) {
+				//set node as visited and set prev
+				visited.add(current);
+				current.setPrevNode(previous);
+				
+			}
+			
+			//if current node is target node, break
+			if(current.equals(endNode)) {
+				break;
+			}
+			
+			//go through edges of current node
+			//put nodes coming out from current into the fringe
+			for(Segment seg:aStarGraph.segments) {
+				//go through each edge to find neighbour
+				if(seg.start.equals(current)) {
+					Node neighbour = seg.end;
+					//if unvisited
+					if(!visited.contains(neighbour)) { 
+						g = g* + seg.length; 
+						f = g + neighbour.getEstimateCostToGoalHeuristic();
+						visited.add(neighbour);
+					}
+					
+					//add a new	element	<neigh,node*,g,f> into the	fringe;
+					seg.end.setPrevNode(current);					
+					fringe.offer(seg.end);
+				}
+			}
 		}
 	}
 	
-	/**
-	 * heuristic function finds: estimated cost to goal
-	 */
-	public int h() {
-		return 0;//TODO: not 0
-	}
+
 
 	/**
 	 * g(node): cost from the start
 	 */
-	public int g(Node currentNode) {
-		return 0;//TODO: not 0
+	public void setCostFromStart(double cost) {
+		g = cost;
 	}
 }
 

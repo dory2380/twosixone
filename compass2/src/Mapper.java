@@ -19,7 +19,7 @@ import javax.swing.JButton;
  * @author tony
  */
 public class Mapper extends GUI {
-	
+
 	public static final Color NODE_COLOUR = new Color(77, 113, 255);
 	public static final Color SEGMENT_COLOUR = new Color(130, 130, 130);
 	public static final Color HIGHLIGHT_COLOUR = new Color(255, 219, 77);
@@ -70,29 +70,31 @@ public class Mapper extends GUI {
 				closest = node;
 			}
 		}
-                                
+
 		// if it's close enough, highlight it and show some information. 
 		if (clicked.distance(closest.location) < MAX_CLICKED_DISTANCE) {
 			graph.setHighlight(closest);	
 			getTextOutputArea().setText(closest.toString());
-						
+
 			//UPDATE START AND END NODES
-			if(graph.search.getStartNode()!=null) {
-				if(graph.search.getGoalNode()!=null) {
-					graph.search.clearSearch();
+			if(graph.start!=null) {
+				if(graph.end!=null) {
+					graph.clearSearch();
 					graph.highlightedNodes.clear();
 					//there exists both a start and end, reset both nodes and appoint new start
-					graph.search.setStartNode(closest);
-				//end doesn't exist
+					graph.start= closest;
+					//end doesn't exist
 				}else {
-					graph.search.setGoalNode(closest); 
+					graph.end = closest; 
 				}
 			}else {
-				graph.search.setStartNode(closest); 
+				graph.start = closest; 
+				//now that there are start and end nodes, display shortest path
+				graph.getAStar();
 
-				}
-			
-			
+			}
+
+
 		}
 	}
 
@@ -174,12 +176,20 @@ public class Mapper extends GUI {
 		origin = new Location(-250, 250); // close enough
 		scale = 1;
 	}
-	
+
 	protected void calculateAPs() {
 		//TODO: CALCULATE APS BUTTON
 		graph.getAPs();
 	}
 
+	protected void findShortestPath() {
+		if(graph.search.getStartNode()!=null && graph.search.endNode!=null) {
+			graph.getAStar();
+		}else {
+			getTextOutputArea().setText("You have not selected 2 nodes/intersections");
+
+		}
+	}
 	/**
 	 * This method does the nasty logic of making sure we always zoom into/out
 	 * of the centre of the screen. It assumes that scale has just been updated
@@ -200,6 +210,7 @@ public class Mapper extends GUI {
 	public static void main(String[] args) {
 		new Mapper();
 	}
+
 }
 
 // code for COMP261 assignments

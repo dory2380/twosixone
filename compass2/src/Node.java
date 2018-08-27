@@ -12,17 +12,31 @@ import java.util.Set;
  * 
  * @author tony
  */
-public class Node implements Comparable {
+public class Node implements Comparable<Node> {
 
 	public final int nodeID;
 	public final Location location;
 	public final Collection<Segment> segments;
 
 	//AStar
-	Node pathParent;
+	Node prevNode;
+
 	double costFromStart; //g
 
 	double estimateCostToGoal; //h
+
+	public double getEstimateCostToGoalHeuristic() {
+		return estimateCostToGoal;
+	}
+
+	/**
+	 * heuristic function finds: estimated cost to goal
+	 *
+	 * @param estimateCostToGoal
+	 */
+	public void setEstimateCostToGoalHeuristic(double estimateCostToGoal) {
+		this.estimateCostToGoal = estimateCostToGoal;
+	}
 
 	public double f; //g+h
 	public double g; //cost from start
@@ -101,12 +115,6 @@ public class Node implements Comparable {
 	}
 
 
-	@Override
-	public int compareTo(Object arg0) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	public Set<Node> getNeighours() {
 		HashSet<Node> neighbours= new HashSet<>();
 		//TODO:
@@ -120,6 +128,24 @@ public class Node implements Comparable {
 
 	public void setCostFromStart(double costFromStart) {
 		this.costFromStart = costFromStart;
+	}
+	public Node getPrevNode() {
+		return prevNode;
+	}
+	
+	public void setPrevNode(Node prevNode) {
+		this.prevNode = prevNode;
+	}
+
+	@Override
+	public int compareTo(Node node) {
+		if(this.getEstimateCostToGoalHeuristic() < node.getEstimateCostToGoalHeuristic())
+			return -1;
+		if(this.getEstimateCostToGoalHeuristic() > node.getEstimateCostToGoalHeuristic())
+			return 1;
+		else {
+			return 0;
+		}
 	}
 }
 // code for COMP261 assignments

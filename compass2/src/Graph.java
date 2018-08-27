@@ -25,10 +25,9 @@ public class Graph {
 
 	Node highlightedNode;
 	Node start;
-	Node goal;
+	Node end;
 	
-	//TODO: move into method to find shortest path? 
-	AStarSearch search = new AStarSearch(start, goal, this);
+	AStarSearch search;
 	
 
 
@@ -77,11 +76,14 @@ public class Graph {
 		
 		// draw path start and end nodes
 		g2.setColor(Mapper.HIGHLIGHT_COLOUR_PATH);
-		if(search.startNode!=null && search.endNode!=null) {
-			search.startNode.draw(g2, screen, origin, scale);
-			search.endNode.draw(g2, screen, origin, scale);
-
+		
+		if(start!=null && end!=null) {
+			start.draw(g2, screen, origin, scale);
+			end.draw(g2, screen, origin, scale);
+			
 		}
+		
+		
 		
 	}
 
@@ -93,12 +95,25 @@ public class Graph {
 	public void setHighlightRoads(Collection<Road> roads) {
 		this.highlightedRoads = roads;
 	}
+	
+	public void getAStar() {
+		if(start!=null && end!=null) {
+			search.findShortestPath(start, end);
+		}
+	}
 
 	public void getAPs() {
 		// TODO articulation points
 		System.out.println("forever getting articulation points...");
 		
 	}
+	
+	public void clearSearch() {
+		start = null;
+		end = null;
+	}
+
+
 	
 //	public void setHighlightNodes(Collection<Node> nodes) {
 //		this.highlightedNodes = nodes;

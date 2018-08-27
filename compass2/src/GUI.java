@@ -99,6 +99,11 @@ public abstract class GUI {
 	 */
 	protected abstract void calculateAPs();
 	
+	/**
+	 * a star search
+	 */
+	protected abstract void findShortestPath();
+	
 	// here are some useful methods you'll need.
 
 	/**
@@ -306,6 +311,16 @@ public abstract class GUI {
 				redraw();
 			}
 		});
+		
+		// make a button to do A*Search
+				JButton aStarSearch = new JButton("find shortest path");
+				aStarSearch.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent ev) {
+						findShortestPath(); //TODO: articulation points
+						redraw();
+					}
+					
+				});
 
 		if (UPDATE_ON_EVERY_CHARACTER) {
 			// this forces an action event to fire on every key press, so the
@@ -362,6 +377,7 @@ public abstract class GUI {
 		navigation.add(south);
 		navigation.add(east);
 		navigation.add(ap);
+		navigation.add(aStarSearch);
 		controls.add(navigation);
 		controls.add(Box.createRigidArea(new Dimension(15, 0)));
 		// glue is another invisible component that grows to take up all the

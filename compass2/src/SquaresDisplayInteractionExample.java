@@ -111,6 +111,12 @@ public class SquaresDisplayInteractionExample extends GUI {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	protected void findShortestPath() {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 // code for COMP261 assignments
