@@ -83,8 +83,6 @@ public class Graph {
 			
 		}
 		
-		
-		
 	}
 
 	public void setHighlight(Node node) {
@@ -97,8 +95,10 @@ public class Graph {
 	}
 	
 	public void getAStar() {
+		
 		if(start!=null && end!=null) {
-			search.findShortestPath(start, end);
+			search = new AStarSearch(start, end, this);
+			search.findShortestPath();
 		}
 	}
 

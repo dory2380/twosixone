@@ -4,22 +4,25 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 public class AStarSearch{
-	
+
 	//Nodes for finding shortest path
 	Node startNode,endNode;
-	
+
 	PriorityQueue<Node> fringe = new PriorityQueue<>();
 	HashSet<Node> visited = new HashSet<Node>();
-	
+
 	Map<Integer, Node> weightedNodes = new HashMap<>();
 	Graph aStarGraph;
-	
+
 	double f; //g(node) + h(node)
 	double g; //cost from start
-	
+
 	//shouldn't need start and end here...lol
 	public AStarSearch(Node start, Node end, Graph graph) {
 		this.aStarGraph = graph;
+		startNode = start;
+		endNode = end;
+
 		//add existing the nodes in the graph with added distance from start
 		for(Map.Entry<Integer, Node> entry : aStarGraph.nodes.entrySet()) {
 			Node weightedNode = entry.getValue();
@@ -43,13 +46,13 @@ public class AStarSearch{
 	public void setGoalNode(Node closest) {
 		this.endNode = closest;
 	}
-	
-//	public void clearSearch() {
-//		startNode = null;
-//		endNode = null;
-//	}
-	
-	
+
+	//	public void clearSearch() {
+	//		startNode = null;
+	//		endNode = null;
+	//	}
+
+
 	/**
 	 * A* Search to find the shortest path from the start location
 	 * to the goal location, printing out the sequence of reload segments 
@@ -57,54 +60,45 @@ public class AStarSearch{
 	 * @param start
 	 * @param end
 	 */
-	public void findShortestPath(Node start, Node end) {
-		startNode = start;
-		endNode = end;
+	public void findShortestPath() {
 		//initialise search
 		fringe.offer(startNode);
-		System.out.println("added" + startNode.toString());
-		
-		Node previous = null;
-		Node current = fringe.poll();
 
-		
+		Node previous = null;
+		Node current;
+
 		while(!fringe.isEmpty()) {
-			
-			//if current node is unvisited
+			current = fringe.poll();
+
 			if(!visited.contains(current)) {
-				//set node as visited and set prev
 				visited.add(current);
-				current.setPrevNode(previous);
-				
-			}
-			
-			//if current node is target node, break
-			if(current.equals(endNode)) {
-				break;
-			}
-			
-			//go through edges of current node
-			//put nodes coming out from current into the fringe
-			for(Segment seg:aStarGraph.segments) {
-				//go through each edge to find neighbour
-				if(seg.start.equals(current)) {
+				current.setPrevNode(previous);					
+
+				//if current node is target node, break
+				System.out.println("current node: " + current);
+				if(current.equals(endNode)) {
+					break;
+				}
+
+
+				for(Segment seg:current.segments) {
+					//go through each edge to find neighbour
 					Node neighbour = seg.end;
 					//if unvisited
 					if(!visited.contains(neighbour)) { 
 						g = g* + seg.length; 
 						f = g + neighbour.getEstimateCostToGoalHeuristic();
-						visited.add(neighbour);
+
+						fringe.offer(neighbour);
 					}
-					
-					//add a new	element	<neigh,node*,g,f> into the	fringe;
-					seg.end.setPrevNode(current);					
-					fringe.offer(seg.end);
+
 				}
 			}
+			System.out.println("travelled route");
+			HashSet<Segment> segmentsVisited = new HashSet<Segment>();
+				System.out.println("through: ");
+			}
 		}
-	}
-	
-
 
 	/**
 	 * g(node): cost from the start

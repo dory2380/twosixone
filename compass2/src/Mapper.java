@@ -183,7 +183,8 @@ public class Mapper extends GUI {
 	}
 
 	protected void findShortestPath() {
-		if(graph.search.getStartNode()!=null && graph.search.endNode!=null) {
+		if(graph == null) getTextOutputArea().setText("non existent graph");
+		if(graph.start!=null && graph.end!=null) {
 			graph.getAStar();
 		}else {
 			getTextOutputArea().setText("You have not selected 2 nodes/intersections");
