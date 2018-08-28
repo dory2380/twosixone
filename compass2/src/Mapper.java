@@ -2,10 +2,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
+
+import javax.swing.JButton;
 
 /**
  * This is the main class for the mapping program. It extends the GUI abstract
@@ -15,9 +19,11 @@ import java.util.HashSet;
  * @author tony
  */
 public class Mapper extends GUI {
+
 	public static final Color NODE_COLOUR = new Color(77, 113, 255);
 	public static final Color SEGMENT_COLOUR = new Color(130, 130, 130);
 	public static final Color HIGHLIGHT_COLOUR = new Color(255, 219, 77);
+	public static final Color HIGHLIGHT_COLOUR_PATH = new Color(204, 153, 255);
 
 	// these two constants define the size of the node squares at different zoom
 	// levels; the equation used is node size = NODE_INTERCEPT + NODE_GRADIENT *
@@ -65,25 +71,30 @@ public class Mapper extends GUI {
 			}
 		}
 
-		// if it's close enough, highlight it and show some information.
+		// if it's close enough, highlight it and show some information. 
 		if (clicked.distance(closest.location) < MAX_CLICKED_DISTANCE) {
 			graph.setHighlight(closest);	
 			getTextOutputArea().setText(closest.toString());
-			
+
 			//UPDATE START AND END NODES
-			if(graph.startNode!=null) {
-				graph.endNode = closest;
-				if(graph.endNode!=null) {
-					graph.clearStartEndNodes();
-				//end doesn't exist
+			if(graph.start!=null) {
+				if(graph.end!=null) {
+					graph.clearSearch();
+					graph.highlightedNodes.clear();
+					//there exists both a start and end, reset both nodes and appoint new start
+					graph.start= closest;
+					//end doesn't exist
 				}else {
-					graph.setEndNode(closest);
+					graph.end = closest; 
 				}
 			}else {
-				graph.setStartNode(closest);
+				graph.start = closest; 
+				//now that there are start and end nodes, display shortest path
+				graph.getAStar();
+
 			}
-			
-			
+
+
 		}
 	}
 
@@ -166,6 +177,20 @@ public class Mapper extends GUI {
 		scale = 1;
 	}
 
+	protected void calculateAPs() {
+		//TODO: CALCULATE APS BUTTON
+		graph.getAPs();
+	}
+
+	protected void findShortestPath() {
+		if(graph == null) getTextOutputArea().setText("non existent graph");
+		if(graph.start!=null && graph.end!=null) {
+			graph.getAStar();
+		}else {
+			getTextOutputArea().setText("You have not selected 2 nodes/intersections");
+
+		}
+	}
 	/**
 	 * This method does the nasty logic of making sure we always zoom into/out
 	 * of the centre of the screen. It assumes that scale has just been updated
@@ -186,6 +211,7 @@ public class Mapper extends GUI {
 	public static void main(String[] args) {
 		new Mapper();
 	}
+
 }
 
 // code for COMP261 assignments

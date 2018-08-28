@@ -31,7 +31,7 @@ import javax.swing.text.DefaultCaret;
 /**
  * This is a template GUI that you can use for your mapping program. It is an
  * *abstract class*, which means you'll need to extend it in your own program.
- * For a simple example of how to do this, have a look at the SquaresExample
+ * For a simple example of how to do this, have a look at the SquaresDisplayInteractionExample
  * class.
  * 
  * This GUI uses Swing, not the first-year UI library. Swing is not the focus of
@@ -94,6 +94,16 @@ public abstract class GUI {
 	protected abstract void onLoad(File nodes, File roads, File segments,
 			File polygons);
 
+	/**
+	 * is called when users want to find the articulation points on a graph: APs
+	 */
+	protected abstract void calculateAPs();
+	
+	/**
+	 * a star search
+	 */
+	protected abstract void findShortestPath();
+	
 	// here are some useful methods you'll need.
 
 	/**
@@ -279,6 +289,7 @@ public abstract class GUI {
 				redraw();
 			}
 		});
+		
 
 		// next, make the search box at the top-right. we manually fix
 		// it's size, and add an action listener to call your code when
@@ -291,6 +302,25 @@ public abstract class GUI {
 				redraw();
 			}
 		});
+		
+		// make a button to find all the articulation points
+		JButton ap = new JButton("calculate APs");
+		ap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				calculateAPs(); //TODO: articulation points
+				redraw();
+			}
+		});
+		
+		// make a button to do A*Search
+				JButton aStarSearch = new JButton("find shortest path");
+				aStarSearch.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent ev) {
+						findShortestPath(); //TODO: articulation points
+						redraw();
+					}
+					
+				});
 
 		if (UPDATE_ON_EVERY_CHARACTER) {
 			// this forces an action event to fire on every key press, so the
@@ -339,13 +369,15 @@ public abstract class GUI {
 
 		JPanel navigation = new JPanel();
 		navigation.setMaximumSize(new Dimension(150, 60));
-		navigation.setLayout(new GridLayout(2, 3));
+		navigation.setLayout(new GridLayout(3, 2));
 		navigation.add(out);
 		navigation.add(north);
 		navigation.add(in);
 		navigation.add(west);
 		navigation.add(south);
 		navigation.add(east);
+		navigation.add(ap);
+		navigation.add(aStarSearch);
 		controls.add(navigation);
 		controls.add(Box.createRigidArea(new Dimension(15, 0)));
 		// glue is another invisible component that grows to take up all the

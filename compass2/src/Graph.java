@@ -24,12 +24,15 @@ public class Graph {
 	Collection<Segment> segments;
 
 	Node highlightedNode;
+	Node start;
+	Node end;
 	
-	//Nodes for finding shortest path
-	Node startNode,endNode;
+	AStarSearch search;
 	
+
+
 	Collection<Road> highlightedRoads = new HashSet<>();
-	Collection<Node> highlightedNodes = new HashSet<>();
+	Collection<Node> highlightedNodes = new HashSet<>(); 
 
 	
 
@@ -70,80 +73,51 @@ public class Graph {
 			g2.setColor(Mapper.HIGHLIGHT_COLOUR);
 			highlightedNode.draw(g2, screen, origin, scale);
 		}
+		
+		// draw path start and end nodes
+		g2.setColor(Mapper.HIGHLIGHT_COLOUR_PATH);
+		
+		if(start!=null && end!=null) {
+			start.draw(g2, screen, origin, scale);
+			end.draw(g2, screen, origin, scale);
+			
+		}
+		
 	}
 
 	public void setHighlight(Node node) {
 		this.highlightedNode = node;
+		highlightedNodes.add(node); //TODO:
 	}
 
 	public void setHighlightRoads(Collection<Road> roads) {
 		this.highlightedRoads = roads;
 	}
 	
-	public void setHighlightNodes(Collection<Node> nodes) {
-		this.highlightedNodes = nodes;
-	}
-	
-	
-	public void setStartNode(Node node) {
-		this.startNode = node;
-	}
-	
-	public void setEndNode(Node node) {
-		this.endNode = node;
+	public void getAStar() {
+		
+		if(start!=null && end!=null) {
+			search = new AStarSearch(start, end, this);
+			search.findShortestPath();
+		}
 	}
 
-	/**
-	 * A* Search to find the shortest path from the start location
-	 * to the goal location, printing out the sequence of reoad segments 
-	 * (including road names and segment lengths)
-	 * @param start
-	 * @param end
-	 */
-	public void findShortestPath(Node start, Node end) {
-
-	}
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * heuristic function finds: estimated cost to goal
-	 */
-	public int h() {
-		return 0;//TODO: not 0
-	}
-
-	/**
-	 * g(node): cost from the start
-	 */
-	public int g(Node currentNode) {
-		return 0;//TODO: not 0
-	}
-
-	/**
-	 * f(node) = g(node) + h(node)
-	 */
-	public int f(int g, int h) {
-		return g+h;
-	}
-
-	public void clearStartEndNodes() {
-		startNode = null;
-		endNode = null;
+	public void getAPs() {
+		// TODO articulation points
+		System.out.println("forever getting articulation points...");
 		
 	}
+	
+	public void clearSearch() {
+		start = null;
+		end = null;
+	}
 
+
+	
+//	public void setHighlightNodes(Collection<Node> nodes) {
+//		this.highlightedNodes = nodes;
+//	}
 
 }
 
